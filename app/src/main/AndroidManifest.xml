@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.espressmobileapp">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light">
+        <activity android:name="com.example.espressmobileapp.views.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.espressmobileapp.views.MapActivity"></activity>
+        <!--        This key has been restricted
+                https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key
+                How to store APY key in secure way
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key#add_key-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${apiKey}"/>
+        <!--https://developers.google.com/maps/documentation/android-sdk/config#apache_http_legacy_library-->
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+    </application>
+
+</manifest>

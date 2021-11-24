@@ -1,0 +1,97 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId "com.example.espressmobileapp"
+        minSdkVersion 18
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    /*https://developer.android.com/studio/preview/features?utm_source=android-studio-2021-1-1&utm_medium=studio-assistant-preview&hl=pl#bumblebee-unified-test-runner*/
+    testOptions {
+        devices {
+            pixel2api29(com.android.build.api.dsl.ManagedVirtualDevice) {
+                device = "Pixel 2"
+                apiLevel = 29
+                systemImageSource = "google"
+                abi = "x86"
+            }
+            nexus10api30(com.android.build.api.dsl.ManagedVirtualDevice) {
+                device = "Nexus 10"
+                apiLevel = 30
+                systemImageSource = "google"
+                abi = "x86"
+            }
+        }
+        emulatorSnapshots {
+            enableForTestFailures true
+            maxSnapshotsForTestFailures 2
+            compressSnapshots false
+        }
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:24.1.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'com.google.android.gms:play-services-maps:9.6.1'
+    implementation 'androidx.annotation:annotation:' + rootProject.androidxAnnotationVersion
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation "org.robolectric:robolectric:3.1.2"
+
+    // Testing-only dependencies
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    // To use the androidx.test.core APIs
+    androidTestImplementation 'androidx.test:core:' + rootProject.coreVersion
+    // Kotlin extensions for androidx.test.core
+    androidTestImplementation 'androidx.test:core-ktx:' + rootProject.coreVersion
+    // To use the JUnit Extension APIs
+    androidTestImplementation 'androidx.test.ext:junit:' + rootProject.extJUnitVersion
+    // Kotlin extensions for androidx.test.ext.junit
+    androidTestImplementation 'androidx.test.ext:junit-ktx:' + rootProject.extJUnitVersion
+    // To use the androidx.test.runner APIs
+    androidTestImplementation 'androidx.test:runner:' + rootProject.runnerVersion
+    androidTestImplementation 'androidx.test:rules:' + rootProject.rulesVersion
+    // To use the androidx.test.espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:' + rootProject.espressoVersion
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:' + rootProject.espressoVersion
+}
